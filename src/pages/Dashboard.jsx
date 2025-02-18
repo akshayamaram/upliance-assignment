@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -19,21 +21,26 @@ const Dashboard = () => {
 
   const totalUsers = userData.length;
 
-  // Extracting email domains for trends visualization
-  const domainCounts = userData.reduce((acc, user) => {
-    const domain = user.email?.split("@")[1] || "Unknown";
-    acc[domain] = (acc[domain] || 0) + 1;
+  // Group users by createdAt date
+  const dateCounts = userData.reduce((acc, user) => {
+    const date = user.createdAt || "Unknown";
+    acc[date] = (acc[date] || 0) + 1;
     return acc;
   }, {});
 
-  const chartData = Object.keys(domainCounts).map((domain) => ({
-    name: domain,
-    count: domainCounts[domain],
+  const chartData = Object.keys(dateCounts).map((date) => ({
+    name: date,
+    count: dateCounts[date],
   }));
 
   return (
     <div className="flex flex-col items-center p-10 gap-8 bg-gray-900 min-h-screen text-white">
-      <h1 className="text-3xl font-bold"><a href="/" >Home</a> | <a href="/dashboard" className="text-orange-400">Dashboard</a></h1>
+      <h1 className="text-3xl font-bold">
+        <a href="/">Home</a> |{" "}
+        <a href="/dashboard" className="text-orange-400">
+          Dashboard
+        </a>
+      </h1>
       <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
         {/* User Counter */}
         <div className="p-6 bg-gray-800 rounded-lg text-center">
@@ -62,15 +69,20 @@ const Dashboard = () => {
         <div className="col-span-2 p-6 bg-gray-800 rounded-lg">
           <h3 className="text-xl font-bold mb-2">User Profile Trends</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
+            <LineChart data={chartData}>
               <XAxis dataKey="name" stroke="#fff" />
               <YAxis stroke="#fff" />
               <Tooltip
                 contentStyle={{ backgroundColor: "#333", color: "#fff" }}
               />
               <Legend />
-              <Bar dataKey="count" fill="#4A90E2" />
-            </BarChart>
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#4A90E2"
+                strokeWidth={2}
+              />
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </div>

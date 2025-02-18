@@ -11,12 +11,15 @@ const Home = () => {
   const [isFormDirty, setIsFormDirty] = useState(false);
 
   const handleFormSubmit = (data) => {
+    const newData = {
+      ...data,
+      createdAt: new Date().toISOString().split("T")[0],
+    };
     setUserData((prevData) => {
-      const updatedData = [...prevData, data]; 
-      localStorage.setItem("userData", JSON.stringify(updatedData)); 
-      return updatedData; 
+      const updatedData = [...prevData, newData];
+      localStorage.setItem("userData", JSON.stringify(updatedData));
+      return updatedData;
     });
-
     setIsFormDirty(false);
   };
 
