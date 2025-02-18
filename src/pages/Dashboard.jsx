@@ -41,18 +41,18 @@ const Dashboard = () => {
           Dashboard
         </a>
       </h1>
-      <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full sm:w-3/4 lg:w-4/5">
         {/* User Counter */}
-        <div className="p-6 bg-gray-800 rounded-lg text-center">
+        <div className="p-4 bg-gray-800 rounded-lg text-center sm:p-6 min-h-[150px] w-full">
           <h3 className="text-lg font-semibold">Total Users</h3>
           <p className="text-3xl font-bold">{totalUsers}</p>
         </div>
 
         {/* User Profile Visuals */}
-        <div className="p-6 bg-gray-800 rounded-lg">
+        <div className="p-4 bg-gray-800 rounded-lg sm:p-6">
           <h3 className="text-xl font-bold mb-2">User Profiles</h3>
           {userData.length > 0 ? (
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-sm">
               {userData.map((user, index) => (
                 <li key={index} className="border-b pb-2">
                   <strong>Name</strong>: {user.name}, <strong>Email</strong>:{" "}
@@ -66,7 +66,7 @@ const Dashboard = () => {
         </div>
 
         {/* User Profile Trends (Chart) */}
-        <div className="col-span-2 p-6 bg-gray-800 rounded-lg">
+        <div className="col-span-1 md:col-span-2 p-4 sm:p-6 w-full bg-gray-800 rounded-lg">
           <h3 className="text-xl font-bold mb-2">User Profile Trends</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={chartData}>
